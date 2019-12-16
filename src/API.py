@@ -7,6 +7,7 @@ import urllib
 load_dotenv()
 
 def get_oauth_token():
+    #This function is for connect with the Idealista API with the token they gave to me.
     url = "https://api.idealista.com/oauth/token"
     apikey = os.getenv("API_key")
     secretkey = os.getenv("Secret_key")
@@ -19,6 +20,7 @@ def get_oauth_token():
     return bearer_token
 
 def search_api(token, url):  
+    #This function is to request information to the Idealista API.
     headers = {'Content-Type': 'Content-Type: multipart/form-data;', 'Authorization' : 'Bearer ' + token}
     content = rq.post(url, headers = headers)
     result = json.loads(content.text)
