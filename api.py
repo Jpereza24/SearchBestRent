@@ -31,10 +31,10 @@ def query(price,rooms):
 @app.route("/list/<district>/", methods=['GET'])
 def listdistrict(district):
     #It should return all the houses from a district.
-    return dumps(coll.find({"District":str(district)}, {"Street":1, "Price":1}))
+    return dumps(coll.find({"District":str(district)}, {"Street":1, "Price":1, "_id":0}))
 
 
-db,coll = cc.connectCollection("Pisos", 'pisos')
+db,coll = cc.connectCollection("Pisos", 'total')
 
 if __name__=="__main__":
     app.run(debug=True)
