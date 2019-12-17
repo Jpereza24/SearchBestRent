@@ -9,10 +9,10 @@ load_dotenv()
 def get_oauth_token():
     #This function is for connect with the Idealista API with the token they gave to me.
     url = "https://api.idealista.com/oauth/token"
-    apikey = os.getenv("API_key")
-    secretkey = os.getenv("Secret_key")
-    key = apikey + ':' + secretkey
-    auth = str(base64.b64encode(key.encode("utf-8")), "utf-8")
+    apikey2 = os.getenv("i3")
+    secretkey2 = os.getenv("s3")
+    key2 = apikey2 + ':' + secretkey2
+    auth = str(base64.b64encode(key2.encode("utf-8")), "utf-8")
     headers = {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8', 'Authorization':'Basic '+ auth}
     params = urllib.parse.urlencode({'grant_type' : 'client_credentials'})
     content = rq.post(url,headers = headers, params=params)
