@@ -1,9 +1,14 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
+import requests as rq
 from src import connectCollection as cc
 from bson.json_util import dumps
 import json
 import folium
 app=Flask(__name__)
+
+@app.route("/")
+def main():
+    return render_template("index.html")
 
 @app.route("/hello")
 def hello():
@@ -14,10 +19,11 @@ def complete():
     #Get the complete database from Mongo Atlas
     return dumps(coll.find())
 
-
-@app.route("/<price>/<rooms>", methods=['GET'])
-def query(price,rooms):
+@app.route("/price/rooms", methods=['POST'])
+def map_price_rooms():
     #The function returns the houses that have the requirements of price and rooms that the user wants.
+    price= request.form.get("price")
+    rooms= request.form.get("rooms")
     pedido=list(coll.find({"Rooms":int(rooms), "Price":{"$lte":int(price)}}))
     mapa = folium.Map(location=[40.4167, -3.70325], zoom_start=12, tiles='Stamen Terrain')
     for house in pedido:
@@ -32,7 +38,6 @@ def query(price,rooms):
 def listdistrict(district):
     #It should return all the houses from a district.
     return dumps(coll.find({"District":str(district)}, {"Street":1, "Price":1, "_id":0}))
-
 
 db,coll = cc.connectCollection("Pisos", 'total')
 
