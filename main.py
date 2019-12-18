@@ -34,7 +34,7 @@ def map_price_rooms():
         folium.Marker(house['location']['coordinates'][::-1],
                      radius=2,
                      icon=folium.Icon(icon='home', color='darkblue'),
-                     popup=house['Street'] + " "+ str(house['Price'])
+                     popup="Street: " + house['Street'] + " "+ "Price: " + str(house['Price']) + " €"
                      ).add_to(mapa)
     return mapa._repr_html_()
 
