@@ -4,6 +4,10 @@ from src import connectCollection as cc
 from bson.json_util import dumps
 import json
 import folium
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import GradientBoostingRegressor
+
 app=Flask(__name__)
 
 @app.route("/")
@@ -33,6 +37,28 @@ def map_price_rooms():
                      popup=house['Street'] + " "+ str(house['Price'])
                      ).add_to(mapa)
     return mapa._repr_html_()
+
+@app.route("/district/propertyt/m2/rooms", methods=['POST'])
+def prediction():
+    #This function returns the prediction of the value you can get from renting a house.
+    query = list(coll.find())
+    district=request.form.get("district")
+    propertyt=request.form.get("propertyt")
+    m2=request.form.get("m2")
+    rooms=request.form.get("rooms")
+    df = pd.DataFrame(query)
+    df.Property_Type = df.Property_Type.replace({'flat':1, 'penthouse':2, 'studio':3, 'duplex':4, 'chalet':5, 'countryHouse':6})
+    df.District=df.District.replace({'salamanca':1, 'centro':2, 'chamartin':3, 'chamberi':4, 'tetuan':5, 'moncloa':6, 'retiro':7, 'hortaleza':8, 'arganzuela':9, '':10})
+    columns = ['Street', 'location']
+    df.drop(columns, axis=1, inplace=True)
+    X = df[['District', 'Property_Type', 'm2', 'Rooms']]
+    y = df['Price']
+    X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.1)
+    reg = GradientBoostingRegressor()
+    reg.fit(X_train, y_train)
+    prueba = pd.DataFrame({"District":int(district), "Property_Type":int(propertyt), "m2":int(m2), "Rooms":int(rooms)}, index=[0])
+    d= reg.predict(prueba)
+    return str(d)
 
 @app.route("/list/<district>/", methods=['GET'])
 def listdistrict(district):

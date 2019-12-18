@@ -3,7 +3,7 @@
  
 <head>
     <title>SearchBestRent</title>
-
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" >
 </head>
  
 <body>
@@ -11,22 +11,46 @@
         <div class="encabezado">
             <h1>SearchBestRent</h1>
             <p class="lead"></p>
-            <p>Still in development
+            <p>Todavía en desarrollo!
             </p>
         </div>
 
         <div class="formulario">
+            <h2>Encuentra Pisos!</h2>
+            <p>¿Estás buscando piso en Madrid? Rellena el siguiente formulario y podrás ver dónde hay casas disponibles.</p>
             <div class="form">
                 <form method='POST' action="/price/rooms">
-                    <h4>Rooms</h4>
-                    <p>Introduce the number of rooms you would like the rental house to have <input name="rooms" type="number" size="40"></p>
+                    <h4>Habitaciones</h4>
+                    <p>Introduce el número de habitaciones que quieres que tenga la casa. <input name="rooms" type="number" size="40"></p>
                     
-                    <h4>Price</h4>
-                    <p>Introduce the maximum price you are willing to pay by month   <input name="price" type="number" size="40"></p>
-                    <input type="submit" value="Send" action="/price/rooms">
+                    <h4>Precio</h4>
+                    <p>Introduce el precio máximo que estarías dispuesto a pagar.  <input name="price" type="number" size="40"></p>
+                    <input type="submit" value="Enviar" action="/price/rooms">
                 </form>
                 
                 
+            </div>
+        </div>
+
+        <div class="formulario">
+            <h2>Predice el precio de alquiler de tu vivienda!</h2>
+            <p>¿Tienes una casa vacía y la quieres alquilar? Rellena el siguiente formulario y podrás saber de forma aproximada el precio del alquiler</p>
+            <div class="form">
+                <form method='POST' action="/district/propertyt/m2/rooms">
+                    <h4>Distrito</h4>
+                    <p>Introduce el código del distrito en el que está la casa que quieres alquilar. <br />
+                        Códigos de distritos: Salamanca:1, Centro:2, Chamartín:3, Chamberí:4, Tetuán:5, Moncloa-Aravaca:6, Retiro:7, Hortaleza:8, Arganzuela:9 
+                     <input name="district" type="number" size="40"></p> 
+                    <h4>Tipo de Vivienda</h4>
+                    <p>Introduce el código del tipo de vivienda de tu casa.<br />
+                        Código de tipos de vivienda: Piso:1, Ático:2, Estudio:3, Dúplex:4, Chalet:5
+                     <input name="propertyt" type="number" size="40"> </p> 
+                    <h4>Metros Cuadrados</h4>
+                    <p>¿Cuańtos metros cuadrados tiene la vivienda que quieres alquilar? <input name="m2" type="number" size="40"></p>
+                    <h4>Habitaciones</h4>
+                    <p>¿Cuántas habitaciones tiene la vivienda? <input name="rooms" type="number" size="40"></p>
+                    <input type="submit" value="Enviar" action="/district/propertyt/m2/rooms">
+                </form>
             </div>
         </div>
  
