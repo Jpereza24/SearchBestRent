@@ -14,4 +14,12 @@ body, html{
 .encabezado{
     text-align:center;
 }
-
+.boton{
+    border: 2px solid blue;
+    padding: 10px 10px;
+    color:white;
+    font-weight:bold;
+    font-size:15px;
+    background-color: #0000ff;
+    border-radius:20px;
+}
