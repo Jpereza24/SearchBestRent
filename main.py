@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template
-import requests as rq
 from src import connectCollection as cc
 from bson.json_util import dumps
 import json
@@ -17,11 +16,6 @@ def main():
 @app.route("/hello")
 def hello():
     return "Hola caracola!"
-
-@app.route("/", methods=['GET'])
-def complete():
-    #Get the complete database from Mongo Atlas
-    return dumps(coll.find())
 
 @app.route("/price/rooms", methods=['POST'])
 def map_price_rooms():
