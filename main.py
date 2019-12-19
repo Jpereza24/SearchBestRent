@@ -2,6 +2,7 @@ from flask import Flask, request, render_template
 from src import connectCollection as cc
 from bson.json_util import dumps
 import json
+import re
 import folium
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -52,7 +53,12 @@ def prediction():
     reg.fit(X_train, y_train)
     prueba = pd.DataFrame({"District":int(district), "Property_Type":int(propertyt), "m2":int(m2), "Rooms":int(rooms)}, index=[0])
     d= reg.predict(prueba)
-    return str(d)
+    pred = float(d)
+    pred = round(pred, 2)
+    pred = str(pred)
+    pred = re.sub("\[","", pred)
+    pred = re.sub("\]","", pred)
+    return render_template("pred.html", pred=pred)
 
 @app.route("/list/<district>/", methods=['GET'])
 def listdistrict(district):
